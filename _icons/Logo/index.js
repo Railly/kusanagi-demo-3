@@ -3,6 +3,7 @@ export default function Logo(props) {
     <svg
       width={162}
       height={47}
+      viewBox="0 0 162 47"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
