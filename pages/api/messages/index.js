@@ -1,7 +1,5 @@
 import { ServiceBusClient } from "@azure/service-bus";
 
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-
 export default async function messages(req, res) {
   const { body, method } = req;
   const { queueName, messages } = body;
@@ -12,7 +10,7 @@ export default async function messages(req, res) {
         await sendAzureServiceBusMessage(queueName, messages);
         res.status(200).send({
           success: true,
-          message: "Message sent to queue",
+          message: `${messages.length} messages sent to queue ${queueName}`,
         });
       } catch (err) {
         res.status(500).send({
@@ -29,6 +27,7 @@ export default async function messages(req, res) {
 }
 
 async function sendAzureServiceBusMessage(queueName, messages) {
+  console.log(queueName, messages);
   const sbClient = new ServiceBusClient(
     process.env.NEXT_PUBLIC_AZURE_CONNECTION_STRING
   );
@@ -52,4 +51,42 @@ async function sendAzureServiceBusMessage(queueName, messages) {
   } finally {
     await sbClient.close();
   }
+}
+
+async function receiveAzureServiceBusMessage(queueName) {
+  const sbClient = new ServiceBusClient(
+    process.env.NEXT_PUBLIC_AZURE_CONNECTION_STRING
+  );
+  const queueReceiver = sbClient.createReceiver(queueName);
+
+  try {
+    let allMessages = [];
+
+    console.log(`Receiving 10 messages...`);
+
+    while (allMessages.length < 10) {
+      const messages = await queueReceiver.receiveMessages(10, {
+        maxWaitTimeInMs: 60 * 1000,
+      });
+
+      if (!messages.length) {
+        console.log("No more messages to receive");
+        break;
+      }
+
+      console.log(`Received ${messages.length} messages`);
+      allMessages.push(...messages);
+
+      for (let message of messages) {
+        console.log(`  Message: '${message.body}'`);
+
+        await queueReceiver.completeMessage(message);
+      }
+    }
+
+    await queueReceiver.close();
+  } finally {
+    await sbClient.close();
+  }
+  return allMessages;
 }

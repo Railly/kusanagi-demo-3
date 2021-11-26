@@ -9,6 +9,6 @@ module.exports = {
     ];
   },
   images: {
-    domains: ["picsum.photos"],
+    domains: ["res.cloudinary.com"],
   },
 };

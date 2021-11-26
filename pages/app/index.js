@@ -2,153 +2,71 @@ import SearchBar from "components/SearchBar";
 import Logo from "components/_icons/Logo";
 import ShoppingCart from "components/_icons/ShoppingCart";
 import { ShoppingContext } from "context/ShoppingContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
-
-const libros = [
-  {
-    id: 1,
-    name: "Producto 1",
-    description: "Descripcion 1",
-    ISBN: "Codigo 1",
-    author: "Autor 1",
-    publisher: "Editorial 1",
-    details: "Detalle 1",
-    price: 40,
-    stock: 1,
-    code: "Codigo 1",
-    file: "https://picsum.photos/200/300",
-    code: "Codigo 1",
-  },
-  {
-    id: 2,
-    name: "Producto 2",
-    description: "Descripcion 2",
-    ISBN: "Codigo 2",
-    author: "Autor 2",
-    publisher: "Editorial 2",
-    file: "https://picsum.photos/200/300",
-    details: "Detalle 2",
-    stock: 2,
-    price: 50,
-    code: "Codigo 1",
-  },
-  {
-    id: 3,
-    name: "Producto 3",
-    description: "Descripcion 3",
-    ISBN: "Codigo 3",
-    author: "Autor 3",
-    publisher: "Editorial 1",
-    file: "https://picsum.photos/200/300",
-    details: "Detalle 3",
-    stock: 3,
-    price: 60,
-    code: "Codigo 1",
-  },
-  {
-    id: 4,
-    name: "Producto 4",
-    description: "Descripcion 4",
-    ISBN: "Codigo 4",
-    author: "Autor 4",
-    publisher: "Editorial 1",
-    file: "https://picsum.photos/200/300",
-    details: "Detalle 4",
-    stock: 4,
-    price: 70,
-    code: "Codigo 1",
-  },
-  {
-    id: 5,
-    name: "Producto 5",
-    description: "Descripcion 5",
-    ISBN: "Codigo 5",
-    author: "Autor 5",
-    publisher: "Editorial 1",
-    file: "https://picsum.photos/200/300",
-    details: "Detalle 5",
-    stock: 5,
-    price: 80,
-    code: "Codigo 1",
-  },
-  {
-    id: 6,
-    name: "Producto 6",
-    description: "Descripcion 6",
-    ISBN: "Codigo 6",
-    author: "Autor 6",
-    publisher: "Editorial 1",
-    file: "https://picsum.photos/200/300",
-    details: "Detalle 6",
-    stock: 6,
-    price: 90,
-    code: "Codigo 1",
-  },
-  {
-    id: 7,
-    name: "Producto 7",
-    description: "Descripcion 7",
-    ISBN: "Codigo 7",
-    publisher: "Editorial 1",
-    author: "Autor 7",
-    file: "https://picsum.photos/200/300",
-    details: "Detalle 7",
-    stock: 7,
-    price: 100,
-    code: "Codigo 1",
-  },
-  {
-    id: 8,
-    name: "Producto 8",
-    description: "Descripcion 8",
-    ISBN: "Codigo 8",
-    publisher: "Editorial 1",
-    author: "Autor 8",
-    file: "https://picsum.photos/200/300",
-    details: "Detalle 8",
-    stock: 8,
-    price: 110,
-    code: "Codigo 1",
-  },
-  {
-    id: 9,
-    name: "Producto 9",
-    description: "Descripcion 9",
-    ISBN: "Codigo 9",
-    author: "Autor 9",
-    publisher: "Editorial 1",
-    file: "https://picsum.photos/200/300",
-    details: "Detalle 9",
-    stock: 9,
-    price: 120,
-    code: "Codigo 1",
-  },
-  {
-    id: 10,
-    name: "Producto 10",
-    description: "Descripcion 10",
-    ISBN: "Codigo 10",
-    author: "Autor 10",
-    publisher: "Editorial 1",
-    file: "https://picsum.photos/200/300",
-    details: "Detalle 10",
-    stock: 10,
-    price: 130,
-    code: "Codigo 1",
-  },
-];
+import Image from "next/image";
 
 export default function App() {
-  const { shoppingCart, setShoppingCart } = useContext(ShoppingContext);
-  console.log(shoppingCart);
+  const {
+    shoppingCartLibro,
+    setShoppingCartLibro,
+    shoppingCartVideojuego,
+    setShoppingCartVideojuego,
+  } = useContext(ShoppingContext);
+
+  const [libros, setLibros] = useState([]);
+  const [videojuegos, setVideojuegos] = useState([]);
+  const [vista, setVista] = useState(true);
+
+  useEffect(() => {
+    window
+      .fetch("http://kusanagi-api.herokuapp.com/api/books?from=0&limit=5", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        setLibros(res);
+      });
+  }, []);
+
+  useEffect(() => {
+    window
+      .fetch(
+        "http://kusanagi-api.herokuapp.com/api/videogames?from=0&limit=5",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        setVideojuegos(res);
+      });
+  }, []);
   return (
     <>
       <header className="flex flex-row pt-6 pl-4 bg-gray-100">
         <Logo />
         <SearchBar />
+        <div className="flex flex-row items-center">
+          <button
+            className="px-4 py-2 ml-8 mr-8 font-bold text-white bg-blue-600 rounded-md hover:bg-blue-700"
+            onClick={() => {
+              setVista(!vista);
+            }}
+          >
+            {vista ? "Videojuegos" : "Libros"}
+          </button>
+        </div>
         <div className="fixed right-0 flex flex-row items-center mx-4">
-          <Link href="/cart">
+          <Link href={vista ? "/cart/libros" : "/cart/videojuegos"}>
             <a className="flex flex-row items-center">
               <ShoppingCart
                 width={50}
@@ -156,69 +74,189 @@ export default function App() {
                 className="text-indigo-600 fill-current"
               />
               <span className="flex items-center justify-center w-8 h-8 font-bold text-white bg-red-500 rounded-full">
-                {shoppingCart.reduce((acc, libro) => acc + libro.quantity, 0)}
+                {vista
+                  ? shoppingCartLibro.reduce(
+                      (acc, libro) => acc + libro.quantity,
+                      0
+                    )
+                  : shoppingCartVideojuego.reduce(
+                      (acc, videojuego) => acc + videojuego.quantity,
+                      0
+                    )}
               </span>
             </a>
           </Link>
         </div>
       </header>
       <main className="flex flex-row flex-wrap items-center justify-center bg-gray-100 ">
-        {libros.map((libro) => (
-          <div
-            key={libro.id}
-            className="flex flex-col p-4 mx-8 mt-6 ml-4 transition-transform bg-white rounded-lg shadow-md w-72 hover:scale-105"
-          >
-            <div className="flex flex-col">
-              <img src={libro.file} alt={libro.name} />
-            </div>
-            <div className="flex flex-col gap-2 py-2">
-              <div className="flex justify-between">
-                <span className="font-semibold">Nombre: </span>
-                <span className="text-gray-900">{libro.name}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="font-semibold">Descripción: </span>
-                <span className="text-gray-900">{libro.description}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="font-semibold">Autor: </span>
-                <span className="text-gray-900">{libro.author}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="font-semibold">Precio: </span>
-                <span className="text-gray-900">${libro.price}</span>
-              </div>
-              <button
-                type="button"
-                onClick={() => {
-                  if (shoppingCart.find((element) => element.id === libro.id)) {
-                    console.log("entro");
-                    setShoppingCart(
-                      shoppingCart.map((element) => {
-                        if (element.id === libro.id) {
-                          console.log(element.id, libro.id);
-                          element.quantity += 1;
-                        }
-                        return element;
-                      })
-                    );
-                  } else {
-                    console.log("obvio");
-                    setShoppingCart([
-                      ...shoppingCart,
-                      { ...libro, quantity: 1 },
-                    ]);
-                  }
-                }}
-                className="flex justify-center p-2 mt-2 font-semibold text-white bg-indigo-600 rounded-md"
+        {vista
+          ? libros.map((libro) => (
+              <div
+                key={libro.id}
+                className="flex flex-col p-4 mx-8 mt-6 ml-4 transition-transform bg-white rounded-lg shadow-md w-72 hover:scale-105"
               >
-                Agregar al carrito
-                <ShoppingCart fill="#fff" className="ml-2" />
-              </button>
-            </div>
-          </div>
-        ))}
+                <div className="flex flex-col">
+                  {libro.img && (
+                    <Image
+                      src={libro.img}
+                      alt={libro.name}
+                      width={200}
+                      height={300}
+                    />
+                  )}
+                </div>
+                <div className="flex flex-col gap-2 py-2">
+                  <div className="flex justify-between">
+                    <span className="font-semibold">Nombre: </span>
+                    <span className="text-gray-900">{libro.name}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-semibold">Descripción: </span>
+                    <span className="text-gray-900">{libro.description}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-semibold">Autor: </span>
+                    <span className="text-gray-900">{libro.author}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-semibold">Precio: </span>
+                    <span className="text-gray-900">${libro.price}</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (
+                        shoppingCartLibro.find(
+                          (element) => element.id === libro.id
+                        )
+                      ) {
+                        console.log("entro");
+                        setShoppingCartLibro(
+                          shoppingCartLibro.map((element) => {
+                            if (element.id === libro.id) {
+                              console.log(element.id, libro.id);
+                              element.quantity += 1;
+                            }
+                            return element;
+                          })
+                        );
+                      } else {
+                        console.log("obvio");
+                        setShoppingCartLibro([
+                          ...shoppingCartLibro,
+                          { ...libro, quantity: 1 },
+                        ]);
+                      }
+                    }}
+                    className="flex justify-center p-2 mt-2 font-semibold text-white bg-indigo-600 rounded-md"
+                  >
+                    Agregar al carrito
+                    <ShoppingCart fill="#fff" className="ml-2" />
+                  </button>
+                </div>
+              </div>
+            ))
+          : videojuegos.map((videojuego) => (
+              <div
+                key={videojuego.id}
+                className="flex flex-col p-4 mx-8 mt-6 ml-4 transition-transform bg-white rounded-lg shadow-md w-72 hover:scale-105"
+              >
+                <div className="flex flex-col">
+                  {videojuego.img && (
+                    <Image
+                      src={videojuego.img}
+                      alt={videojuego.name}
+                      width={200}
+                      height={300}
+                    />
+                  )}
+                </div>
+                <div className="flex flex-col gap-2 py-2">
+                  <div className="flex justify-between">
+                    <span className="font-semibold">Nombre: </span>
+                    <span className="text-gray-900">{videojuego.name}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-semibold">Descripción: </span>
+                    <span className="text-gray-900 truncate">
+                      {videojuego.description}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-semibold">Marca: </span>
+                    <span className="text-gray-900">{videojuego.brand}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-semibold">Precio: </span>
+                    <span className="text-gray-900">${videojuego.price}</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (
+                        shoppingCartVideojuego.find(
+                          (element) => element.id === videojuego.id
+                        )
+                      ) {
+                        console.log("entro");
+                        setShoppingCartVideojuego(
+                          shoppingCartVideojuego.map((element) => {
+                            if (element.id === videojuego.id) {
+                              console.log(element.id, videojuego.id);
+                              element.quantity += 1;
+                            }
+                            return element;
+                          })
+                        );
+                      } else {
+                        console.log("obvio");
+                        setShoppingCartVideojuego([
+                          ...shoppingCartVideojuego,
+                          { ...videojuego, quantity: 1 },
+                        ]);
+                      }
+                    }}
+                    className="flex justify-center p-2 mt-2 font-semibold text-white bg-indigo-600 rounded-md"
+                  >
+                    Agregar al carrito
+                    <ShoppingCart fill="#fff" className="ml-2" />
+                  </button>
+                </div>
+              </div>
+            ))}
       </main>
+      {/* <footer className="flex flex-row items-center justify-center bg-gray-100">
+        <div className="flex flex-col gap-2">
+          <div className="flex justify-center">
+            <Link href="/">
+              <a className="text-gray-900">
+                <Home fill="#fff" className="w-8 h-8" />
+              </a>
+            </Link>
+          </div>
+          <div className="flex justify-center">
+            <Link href="/libros">
+              <a className="text-gray-900">
+                <Book fill="#fff" className="w-8 h-8" />
+              </a>
+            </Link>
+          </div>
+          <div className="flex justify-center">
+            <Link href="/videojuegos">
+              <a className="text-gray-900">
+                <Gamepad fill="#fff" className="w-8 h-8" />
+              </a>
+            </Link>
+          </div>
+          <div className="flex justify-center">
+            <Link href="/carrito">
+              <a className="text-gray-900">
+                <ShoppingCart fill="#fff" className="w-8 h-8" />
+              </a>
+            </Link>
+          </div>
+        </div>
+      </footer> */}
     </>
   );
 }

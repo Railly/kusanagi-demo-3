@@ -14,14 +14,15 @@ const schema = yup.object().shape({
     .string()
     .min(3, "La descripcion debe tener al menos 3 caracteres")
     .required("La descripcion es requerida"),
-  ISBN: yup
+  brand: yup
     .string()
-    .matches(/^\d{10}$/, "El ISBN debe ser de 10 digitos")
-    .required("El ISBN es requerido"),
-  author: yup
+    .min(3, "La marca debe tener al menos 3 caracteres")
+    .required("La marca es requerida"),
+  code: yup
     .string()
-    .min(3, "El autor debe tener al menos 3 caracteres")
-    .required("El autor es requerido"),
+    .min(3, "El codigo debe tener al menos 3 caracteres")
+    .matches(/^[A-Z]{3}-[0-9]{4}$/, "El codigo debe ser de forma AAA-1234")
+    .required("El codigo es requerido"),
   price: yup
     .string()
     .matches(/^\d{1,3}(\.\d{1,2})?$/, "El precio debe ser un numero")
@@ -30,10 +31,6 @@ const schema = yup.object().shape({
     .string()
     .matches(/^\d{1,3}$/, "El stock debe ser un numero")
     .required("El stock es requerido"),
-  publisher: yup
-    .string()
-    .min(3, "La editorial debe tener al menos 3 caracteres")
-    .required("La editorial es requerida"),
   file: yup
     .mixed()
     .test(
@@ -42,12 +39,6 @@ const schema = yup.object().shape({
       (value) => value && value[0] && value[0].type === "image/jpeg"
     )
     .required("Debe seleccionar una imagen"),
-  code: yup
-    .string()
-    .min(3, "El codigo debe tener al menos 3 caracteres")
-    .matches(/^[A-Z]{3}-[0-9]{4}$/, "El codigo debe ser de forma AAA-1234")
-    .required("El codigo es requerido"),
-  details: yup.string(),
 });
 
 export default function CrearProducto() {
@@ -70,26 +61,21 @@ export default function CrearProducto() {
 
     newFormData.append("name", data.name);
     newFormData.append("description", data.description);
-    newFormData.append("ISBN", data.ISBN);
-    newFormData.append("author", data.author);
+    newFormData.append("brand", data.brand);
+    newFormData.append("code", data.code);
     newFormData.append("price", data.price);
     newFormData.append("stock", data.stock);
-    newFormData.append("publisher", data.publisher);
-    newFormData.append("code", data.code);
-    newFormData.append("details", data.details);
     newFormData.append("file", data.file[0]);
 
-    console.log(newFormData);
-
     window
-      .fetch("https://kusanagi-api.herokuapp.com/api/books", {
+      .fetch("https://kusanagi-api.herokuapp.com/api/videogames", {
         method: "POST",
         body: newFormData,
       })
       .then((res) => res.json())
       .then((res) => {
         if (res.ok) {
-          router.push("/app/crisol");
+          router.push("/app/phantom");
         } else {
           setError(res.errors);
         }
@@ -107,7 +93,7 @@ export default function CrearProducto() {
   return (
     <>
       <header className="flex flex-row items-center justify-between px-4 py-6 bg-gray-100">
-        <Image src="/images/crisol.png" width={630 / 4} height={320 / 4} />
+        <Image src="/images/phantom.png" width={630 / 4} height={320 / 4} />
         <div className="flex flex-row items-center">
           <h1 className="text-2xl font-bold text-gray-700">Crear producto</h1>
         </div>
@@ -191,12 +177,12 @@ export default function CrearProducto() {
           </div>
           <div className="flex flex-col">
             <label className="flex flex-col mx-8 font-semibold text-black">
-              Editorial:
+              Marca:
               <input
                 className="px-4 py-2 mt-2 text-black border border-gray-400 rounded-full outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
-                name="publisher"
-                id="publisher"
-                {...register("publisher")}
+                name="brand"
+                id="brand"
+                {...register("brand")}
               />
             </label>
             <span className="flex mt-2 ml-10 text-red-500 font-sm text-md">
@@ -220,34 +206,6 @@ export default function CrearProducto() {
           </div>
           <div className="flex flex-col">
             <label className="flex flex-col mx-8 font-semibold text-black">
-              ISBN:
-              <input
-                className="px-4 py-2 mt-2 text-black border border-gray-400 rounded-full outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
-                name="ISBN"
-                id="ISBN"
-                {...register("ISBN")}
-              />
-            </label>
-            <span className="flex mt-2 ml-10 text-red-500 font-sm text-md">
-              {errors?.ISBN && errors?.ISBN?.message}
-            </span>
-          </div>
-          <div className="flex flex-col">
-            <label className="flex flex-col mx-8 font-semibold text-black">
-              Autor:
-              <input
-                className="px-4 py-2 mt-2 text-black border border-gray-400 rounded-full outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
-                name="author"
-                id="author"
-                {...register("author")}
-              />
-            </label>
-            <span className="flex mt-2 ml-10 text-red-500 font-sm text-md">
-              {errors?.author && errors?.author?.message}
-            </span>
-          </div>
-          <div className="flex flex-col">
-            <label className="flex flex-col mx-8 font-semibold text-black">
               Código
               <input
                 className="px-4 py-2 mt-2 text-black border border-gray-400 rounded-full outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
@@ -258,20 +216,6 @@ export default function CrearProducto() {
             </label>
             <span className="flex mt-2 ml-10 text-red-500 font-sm text-md">
               {errors?.code && errors?.code?.message}
-            </span>
-          </div>
-          <div className="flex flex-col">
-            <label className="flex flex-col mx-8 font-semibold text-black">
-              Detalles:
-              <input
-                className="px-4 py-2 mt-2 text-black border border-gray-400 rounded-full outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
-                name="details"
-                id="details"
-                {...register("details")}
-              />
-            </label>
-            <span className="flex mt-2 ml-10 text-red-500 font-sm text-md">
-              {errors?.details && errors?.details?.message}
             </span>
           </div>
           <div className="flex flex-col items-center justify-center w-full">

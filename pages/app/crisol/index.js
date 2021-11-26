@@ -1,8 +1,29 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function Crisol() {
   const router = useRouter();
+
+  const [pedidos, setPedidos] = useState([]);
+
+  useEffect(() => {
+    window
+      .fetch("https://kusanagi.app.vercel/api/messages/crisol_response/peek", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        if (res.success) {
+          setPedidos(res.data);
+        }
+      });
+  }, []);
+
   return (
     <>
       <header className="flex flex-row items-center justify-between px-4 py-6 bg-gray-100">

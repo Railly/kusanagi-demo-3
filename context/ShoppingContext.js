@@ -3,13 +3,16 @@ import { createContext, useState } from "react";
 export const ShoppingContext = createContext();
 
 const ShoppingContextProvider = (props) => {
-  const [shoppingCart, setShoppingCart] = useState([]);
+  const [shoppingCartLibro, setShoppingCartLibro] = useState([]);
+  const [shoppingCartVideojuego, setShoppingCartVideojuego] = useState([]);
 
   return (
     <ShoppingContext.Provider
       value={{
-        shoppingCart,
-        setShoppingCart,
+        shoppingCartLibro,
+        setShoppingCartLibro,
+        shoppingCartVideojuego,
+        setShoppingCartVideojuego,
       }}
     >
       {props.children}
