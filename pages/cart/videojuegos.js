@@ -28,7 +28,7 @@ export default function Cart() {
     ];
 
     window
-      .fetch("https://kusanagi-demo-3.vercel.app/api/messages", {
+      .fetch(`${process.env.NEXT_PUBLIC_URL}/api/messages`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

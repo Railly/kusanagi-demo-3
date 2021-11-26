@@ -11,7 +11,7 @@ export default function Phantom() {
   useEffect(() => {
     window
       .fetch(
-        "https://kusanagi-demo-3.vercel.app/api/messages/phantom_response/peek",
+        `${process.env.NEXT_PUBLIC_URL}/api/messages/phantom_response/peek`,
         {
           method: "GET",
           headers: {
