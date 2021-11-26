@@ -10,7 +10,7 @@ export default function Crisol() {
   useEffect(() => {
     window
       .fetch(
-        "https://kusanagi-demo-3.app.vercel/api/messages/crisol_response/peek",
+        "https://kusanagi-demo-3.vercel.app/api/messages/crisol_response/peek",
         {
           method: "GET",
           headers: {
