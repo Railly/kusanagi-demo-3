@@ -10,12 +10,15 @@ export default function Phantom() {
 
   useEffect(() => {
     window
-      .fetch("https://kusanagi.app.vercel/api/messages/phantom_response/peek", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+      .fetch(
+        "https://kusanagi-demo-3.app.vercel/api/messages/phantom_response/peek",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
       .then((res) => res.json())
       .then((res) => {
         console.log(res);
