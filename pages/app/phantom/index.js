@@ -2,10 +2,275 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
+// const pedidos = [
+//   {
+//     dni: "45464640",
+//     code: "c5ec3d34-f382-4b68-b479-df8ef65c37e0",
+//     cost: 1100.0,
+//     videogames: [
+//       {
+//         name: "New Super Mario Bros U Deluxe",
+//         description:
+//           "Juego de plataformas en 2D protagonizado por Mario y sus amigos.",
+//         stock: 150,
+//         code: "SMB-1987",
+//         brand: "Nintendo",
+//         price: 41.99,
+//         img: "https://res.cloudinary.com/ab-software/image/upload/v1637957430/IndieSingles/Images/wsen1el38akqbpimpxp3.jpg",
+//         id: "61a13f37ac43bc3e1f46bb35",
+//       },
+//       {
+//         name: "New Super Mario Bros U Deluxe",
+//         description:
+//           "Juego de plataformas en 2D protagonizado por Mario y sus amigos.",
+//         stock: 150,
+//         code: "SMB-1987",
+//         brand: "Nintendo",
+//         price: 41.99,
+//         img: "https://res.cloudinary.com/ab-software/image/upload/v1637957430/IndieSingles/Images/wsen1el38akqbpimpxp3.jpg",
+//         id: "61a13f37ac43bc3e1f46bb35",
+//       },
+//     ],
+//   },
+//   {
+//     dni: "45464641",
+//     code: "c5ec3d34-f382-4b68-b479-df8ef65c37e1",
+//     cost: 1100.0,
+//     videogames: [
+//       {
+//         name: "New Super Mario Bros U Deluxe",
+//         description:
+//           "Juego de plataformas en 2D protagonizado por Mario y sus amigos.",
+//         stock: 150,
+//         code: "SMB-1987",
+//         brand: "Nintendo",
+//         price: 41.99,
+//         img: "https://res.cloudinary.com/ab-software/image/upload/v1637957430/IndieSingles/Images/wsen1el38akqbpimpxp3.jpg",
+//         id: "61a13f37ac43bc3e1f46bb35",
+//       },
+//       {
+//         name: "New Super Mario Bros U Deluxe",
+//         description:
+//           "Juego de plataformas en 2D protagonizado por Mario y sus amigos.",
+//         stock: 150,
+//         code: "SMB-1987",
+//         brand: "Nintendo",
+//         price: 41.99,
+//         img: "https://res.cloudinary.com/ab-software/image/upload/v1637957430/IndieSingles/Images/wsen1el38akqbpimpxp3.jpg",
+//         id: "61a13f37ac43bc3e1f46bb35",
+//       },
+//     ],
+//   },
+//   {
+//     dni: "45464642",
+//     code: "c5ec3d34-f382-4b68-b479-df8ef65c37e2",
+//     cost: 1100.0,
+//     videogames: [
+//       {
+//         name: "New Super Mario Bros U Deluxe",
+//         description:
+//           "Juego de plataformas en 2D protagonizado por Mario y sus amigos.",
+//         stock: 150,
+//         code: "SMB-1987",
+//         brand: "Nintendo",
+//         price: 41.99,
+//         img: "https://res.cloudinary.com/ab-software/image/upload/v1637957430/IndieSingles/Images/wsen1el38akqbpimpxp3.jpg",
+//         id: "61a13f37ac43bc3e1f46bb35",
+//       },
+//       {
+//         name: "New Super Mario Bros U Deluxe",
+//         description:
+//           "Juego de plataformas en 2D protagonizado por Mario y sus amigos.",
+//         stock: 150,
+//         code: "SMB-1987",
+//         brand: "Nintendo",
+//         price: 41.99,
+//         img: "https://res.cloudinary.com/ab-software/image/upload/v1637957430/IndieSingles/Images/wsen1el38akqbpimpxp3.jpg",
+//         id: "61a13f37ac43bc3e1f46bb35",
+//       },
+//     ],
+//   },
+//   {
+//     dni: "45464643",
+//     code: "c5ec3d34-f382-4b68-b479-df8ef65c37e3",
+//     cost: 1100.0,
+//     videogames: [
+//       {
+//         name: "New Super Mario Bros U Deluxe",
+//         description:
+//           "Juego de plataformas en 2D protagonizado por Mario y sus amigos.",
+//         stock: 150,
+//         code: "SMB-1987",
+//         brand: "Nintendo",
+//         price: 41.99,
+//         img: "https://res.cloudinary.com/ab-software/image/upload/v1637957430/IndieSingles/Images/wsen1el38akqbpimpxp3.jpg",
+//         id: "61a13f37ac43bc3e1f46bb35",
+//       },
+//       {
+//         name: "New Super Mario Bros U Deluxe",
+//         description:
+//           "Juego de plataformas en 2D protagonizado por Mario y sus amigos.",
+//         stock: 150,
+//         code: "SMB-1987",
+//         brand: "Nintendo",
+//         price: 41.99,
+//         img: "https://res.cloudinary.com/ab-software/image/upload/v1637957430/IndieSingles/Images/wsen1el38akqbpimpxp3.jpg",
+//         id: "61a13f37ac43bc3e1f46bb35",
+//       },
+//     ],
+//   },
+//   {
+//     dni: "45464644",
+//     code: "c5ec3d34-f382-4b68-b479-df8ef65c37e4",
+//     cost: 1100.0,
+//     videogames: [
+//       {
+//         name: "New Super Mario Bros U Deluxe",
+//         description:
+//           "Juego de plataformas en 2D protagonizado por Mario y sus amigos.",
+//         stock: 150,
+//         code: "SMB-1987",
+//         brand: "Nintendo",
+//         price: 41.99,
+//         img: "https://res.cloudinary.com/ab-software/image/upload/v1637957430/IndieSingles/Images/wsen1el38akqbpimpxp3.jpg",
+//         id: "61a13f37ac43bc3e1f46bb35",
+//       },
+//       {
+//         name: "New Super Mario Bros U Deluxe",
+//         description:
+//           "Juego de plataformas en 2D protagonizado por Mario y sus amigos.",
+//         stock: 150,
+//         code: "SMB-1987",
+//         brand: "Nintendo",
+//         price: 41.99,
+//         img: "https://res.cloudinary.com/ab-software/image/upload/v1637957430/IndieSingles/Images/wsen1el38akqbpimpxp3.jpg",
+//         id: "61a13f37ac43bc3e1f46bb35",
+//       },
+//     ],
+//   },
+//   {
+//     dni: "45464645",
+//     code: "c5ec3d34-f382-4b68-b479-df8ef65c37e5",
+//     cost: 1100.0,
+//     videogames: [
+//       {
+//         name: "New Super Mario Bros U Deluxe",
+//         description:
+//           "Juego de plataformas en 2D protagonizado por Mario y sus amigos.",
+//         stock: 150,
+//         code: "SMB-1987",
+//         brand: "Nintendo",
+//         price: 41.99,
+//         img: "https://res.cloudinary.com/ab-software/image/upload/v1637957430/IndieSingles/Images/wsen1el38akqbpimpxp3.jpg",
+//         id: "61a13f37ac43bc3e1f46bb35",
+//       },
+//       {
+//         name: "New Super Mario Bros U Deluxe",
+//         description:
+//           "Juego de plataformas en 2D protagonizado por Mario y sus amigos.",
+//         stock: 150,
+//         code: "SMB-1987",
+//         brand: "Nintendo",
+//         price: 41.99,
+//         img: "https://res.cloudinary.com/ab-software/image/upload/v1637957430/IndieSingles/Images/wsen1el38akqbpimpxp3.jpg",
+//         id: "61a13f37ac43bc3e1f46bb35",
+//       },
+//     ],
+//   },
+//   {
+//     dni: "45464646",
+//     code: "c5ec3d34-f382-4b68-b479-df8ef65c37e6",
+//     cost: 1100.0,
+//     videogames: [
+//       {
+//         name: "New Super Mario Bros U Deluxe",
+//         description:
+//           "Juego de plataformas en 2D protagonizado por Mario y sus amigos.",
+//         stock: 150,
+//         code: "SMB-1987",
+//         brand: "Nintendo",
+//         price: 41.99,
+//         img: "https://res.cloudinary.com/ab-software/image/upload/v1637957430/IndieSingles/Images/wsen1el38akqbpimpxp3.jpg",
+//         id: "61a13f37ac43bc3e1f46bb35",
+//       },
+//       {
+//         name: "New Super Mario Bros U Deluxe",
+//         description:
+//           "Juego de plataformas en 2D protagonizado por Mario y sus amigos.",
+//         stock: 150,
+//         code: "SMB-1987",
+//         brand: "Nintendo",
+//         price: 41.99,
+//         img: "https://res.cloudinary.com/ab-software/image/upload/v1637957430/IndieSingles/Images/wsen1el38akqbpimpxp3.jpg",
+//         id: "61a13f37ac43bc3e1f46bb35",
+//       },
+//     ],
+//   },
+//   {
+//     dni: "45464647",
+//     code: "c5ec3d34-f382-4b68-b479-df8ef65c37e7",
+//     cost: 1100.0,
+//     videogames: [
+//       {
+//         name: "New Super Mario Bros U Deluxe",
+//         description:
+//           "Juego de plataformas en 2D protagonizado por Mario y sus amigos.",
+//         stock: 150,
+//         code: "SMB-1987",
+//         brand: "Nintendo",
+//         price: 41.99,
+//         img: "https://res.cloudinary.com/ab-software/image/upload/v1637957430/IndieSingles/Images/wsen1el38akqbpimpxp3.jpg",
+//         id: "61a13f37ac43bc3e1f46bb35",
+//       },
+//       {
+//         name: "New Super Mario Bros U Deluxe",
+//         description:
+//           "Juego de plataformas en 2D protagonizado por Mario y sus amigos.",
+//         stock: 150,
+//         code: "SMB-1987",
+//         brand: "Nintendo",
+//         price: 41.99,
+//         img: "https://res.cloudinary.com/ab-software/image/upload/v1637957430/IndieSingles/Images/wsen1el38akqbpimpxp3.jpg",
+//         id: "61a13f37ac43bc3e1f46bb35",
+//       },
+//     ],
+//   },
+//   {
+//     dni: "45464648",
+//     code: "c5ec3d34-f382-4b68-b479-df8ef65c37e8",
+//     cost: 1100.0,
+//     videogames: [
+//       {
+//         name: "New Super Mario Bros U Deluxe",
+//         description:
+//           "Juego de plataformas en 2D protagonizado por Mario y sus amigos.",
+//         stock: 150,
+//         code: "SMB-1987",
+//         brand: "Nintendo",
+//         price: 41.99,
+//         img: "https://res.cloudinary.com/ab-software/image/upload/v1637957430/IndieSingles/Images/wsen1el38akqbpimpxp3.jpg",
+//         id: "61a13f37ac43bc3e1f46bb35",
+//       },
+//       {
+//         name: "New Super Mario Bros U Deluxe",
+//         description:
+//           "Juego de plataformas en 2D protagonizado por Mario y sus amigos.",
+//         stock: 150,
+//         code: "SMB-1987",
+//         brand: "Nintendo",
+//         price: 41.99,
+//         img: "https://res.cloudinary.com/ab-software/image/upload/v1637957430/IndieSingles/Images/wsen1el38akqbpimpxp3.jpg",
+//         id: "61a13f37ac43bc3e1f46bb35",
+//       },
+//     ],
+//   },
+// ];
+
 export default function Phantom() {
   const router = useRouter();
 
-  const [pedidos, setPedidos] = useState([]);
+  const [pedidos, setPedidos] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [videojuegosIds, setVideojuegosIds] = useState([]);
 
   useEffect(() => {
@@ -21,42 +286,21 @@ export default function Phantom() {
       )
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
-        if (res.success) {
-          const pedidoResponse = res.data.map((pedido) => {
-            window
-              .fetch(
-                "http://kusanagi-api.herokuapp.com/api/videogames/array/",
-                {
-                  method: "PUT",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    ids: pedido.videogames,
-                  }),
-                }
-              )
-              .then((res) => res.json())
-              .then((res) => {
-                console.log(res);
-                if (res.success) {
-                  pedido.videogames = res.data.ids;
-                }
-              });
-            return pedido;
-          });
-          setPedidos(pedidoResponse);
-        }
+        setPedidos(res.data.reverse());
+        setLoading(false);
       });
   }, []);
+
+  console.log(pedidos, "pedidos");
 
   return (
     <>
       <header className="flex flex-row items-center justify-between px-4 py-6 bg-gray-100">
         <Image src="/images/phantom.png" width={630 / 4} height={320 / 4} />
         <div className="flex flex-row items-center">
-          <h1 className="text-2xl font-bold text-gray-700">Ventas</h1>
+          <h1 className="text-2xl font-bold text-gray-700">
+            Historial de pedidos
+          </h1>
         </div>
         <div>
           <button
@@ -79,35 +323,124 @@ export default function Phantom() {
         </div>
       </header>
       <main>
-        <div className="flex flex-row justify-between px-4 py-6 bg-gray-100">
-          <div className="flex flex-col items-center">
-            <h1 className="text-2xl font-bold text-gray-700">
-              Historial de pedidos
-            </h1>
-          </div>
-          <div className="flex flex-col items-center">
-            {pedidos.length > 0 &&
+        <div className="flex flex-col items-center justify-between h-full px-4 py-6 bg-gray-100">
+          <div className="flex flex-col items-center w-full">
+            {!pedidos ? (
+              <svg
+                className="w-12 h-12 mr-3 -ml-1 text-black animate-spin"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+            ) : (
+              pedidos &&
               pedidos.map((pedido) => (
-                <div key={pedido.code} className="flex flex-col items-center">
-                  <h1 className="text-2xl font-bold text-gray-700">
-                    {pedido.dni}
-                  </h1>
-                  <h1 className="text-2xl font-bold text-gray-700">
-                    {pedido.code}
-                  </h1>
-                  <h1 className="text-2xl font-bold text-gray-700">
-                    {pedido.cost}
-                  </h1>
-                  {pedido.videogames.map((videogame) => (
-                    <h1
-                      key={videogame}
-                      className="text-2xl font-bold text-gray-700"
-                    >
-                      {videogame}
+                <article
+                  key={pedido.code}
+                  className="flex flex-col w-9/12 mb-8 bg-white shadow-lg"
+                >
+                  <header className="flex justify-center p-4 bg-gray-900 rounded-md">
+                    <h1 className="text-xl font-bold text-white">
+                      Pedido {pedido.code}
                     </h1>
-                  ))}
-                </div>
-              ))}
+                  </header>
+                  <main className="p-8">
+                    {pedido.videogames.map((videogame, index) => (
+                      <div
+                        key={`${pedido.code}-${index}`}
+                        className="flex justify-between pb-4 mb-4 border-b border-gray-900 rounded-md "
+                      >
+                        <div>
+                          {videogame?.img && (
+                            <Image
+                              src={videogame.img}
+                              width={200 / 2}
+                              height={300 / 2}
+                            />
+                          )}
+                        </div>
+                        <div className="w-full pl-8">
+                          <div className="flex items-center justify-between">
+                            <h1 className="text-lg font-bold text-gray-700">
+                              Videojuego {index + 1}:
+                            </h1>
+                            <h1 className="text-lg font-semibold text-gray-700">
+                              {videogame.name}
+                            </h1>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <h1 className="text-lg font-bold text-gray-700">
+                              Descripcion:
+                            </h1>
+                            <h1 className="text-lg font-semibold text-gray-700 truncate w-72">
+                              {videogame.description}
+                            </h1>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <h1 className="text-lg font-bold text-gray-700">
+                              Código:
+                            </h1>
+                            <h1 className="text-lg font-semibold text-gray-700">
+                              {videogame.code}
+                            </h1>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <h1 className="text-lg font-bold text-gray-700">
+                              Marca:
+                            </h1>
+                            <h1 className="text-lg font-semibold text-gray-700">
+                              {videogame.brand}
+                            </h1>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <h1 className="text-lg font-bold text-gray-700">
+                              Precio:
+                            </h1>
+                            <h1 className="text-lg font-semibold text-gray-700">
+                              {videogame.price}
+                            </h1>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                    <div className="flex items-center justify-between">
+                      <h1 className="text-lg font-bold text-gray-700">DNI:</h1>
+                      <h1 className="text-lg font-semibold text-gray-700">
+                        {pedido.dni}
+                      </h1>
+                    </div>
+                    <div className="flex items-center justify-between mt-4">
+                      <h1 className="text-2xl font-bold text-gray-700">IGV:</h1>
+                      <h1 className="text-2xl font-bold text-gray-700">
+                        S/. {(+pedido.cost * 0.18).toFixed(2)}
+                      </h1>
+                    </div>
+                    <div className="flex items-center justify-between mt-4">
+                      <h1 className="text-2xl font-bold text-gray-700">
+                        Total:
+                      </h1>
+                      <h1 className="text-2xl font-bold text-gray-700">
+                        S/. {pedido.cost}
+                      </h1>
+                    </div>
+                  </main>
+                </article>
+              ))
+            )}
           </div>
         </div>
       </main>
