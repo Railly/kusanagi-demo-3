@@ -14,6 +14,7 @@ export default function Cart() {
 
   const handleCheckout = () => {
     const cartUuid = uuidv4();
+
     setLoading(true);
 
     const messages = [
