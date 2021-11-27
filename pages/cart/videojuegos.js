@@ -15,6 +15,7 @@ export default function Cart() {
   const handleCheckout = () => {
     const cartUuid = uuidv4();
     setLoading(true);
+
     const messages = [
       {
         body: {
@@ -181,7 +182,7 @@ export default function Cart() {
                     Precio total
                   </span>
                   <span className="text-lg font-bold text-gray-700">
-                    {`$${libro.price * libro.quantity}`}
+                    {`S/ ${libro.price * libro.quantity}`}
                   </span>
                 </div>
               </div>
@@ -194,7 +195,7 @@ export default function Cart() {
               Total a pagar
             </span>
             <span className="text-lg font-bold text-gray-700">
-              {`: $${shoppingCartVideojuego.reduce((acc, item) => {
+              {`: S/ ${shoppingCartVideojuego.reduce((acc, item) => {
                 return acc + item.price * item.quantity;
               }, 0)}`}
             </span>

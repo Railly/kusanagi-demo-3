@@ -123,7 +123,7 @@ export default function Cart() {
                   </div>
                   <div>
                     <span className="font-semibold text-gray-500">
-                      Precio unitario: {`$${libro.price}`}
+                      Precio unitario: {`S/. ${libro.price}`}
                     </span>
                   </div>
                 </div>
@@ -179,7 +179,7 @@ export default function Cart() {
                     Precio total
                   </span>
                   <span className="text-lg font-bold text-gray-700">
-                    {`$${libro.price * libro.quantity}`}
+                    {`S/. ${(libro.price * libro.quantity).toFixed(2)}`}
                   </span>
                 </div>
               </div>
@@ -192,9 +192,11 @@ export default function Cart() {
               Total a pagar
             </span>
             <span className="text-lg font-bold text-gray-700">
-              {`: $${shoppingCartLibro.reduce((acc, item) => {
-                return acc + item.price * item.quantity;
-              }, 0)}`}
+              {`: S/. ${shoppingCartLibro
+                .reduce((acc, item) => {
+                  return acc + item.price * item.quantity;
+                }, 0)
+                .toFixed(2)}`}
             </span>
           </div>
         </div>

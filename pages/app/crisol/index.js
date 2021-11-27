@@ -89,7 +89,7 @@ export default function Crisol() {
                 >
                   <header className="flex justify-center p-4 bg-gray-900 rounded-md">
                     <h1 className="text-xl font-bold text-white">
-                      Pedido {pedido.id}
+                      Pedido {pedido.code}
                     </h1>
                   </header>
                   <main className="p-8">
