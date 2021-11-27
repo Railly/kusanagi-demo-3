@@ -174,7 +174,7 @@ export default function Crisol() {
                         Total:
                       </h1>
                       <h1 className="text-2xl font-bold text-gray-700">
-                        $ {(+pedido.cost).toFixed(2)}
+                        S/. {(+pedido.cost).toFixed(2)}
                       </h1>
                     </div>
                   </main>
