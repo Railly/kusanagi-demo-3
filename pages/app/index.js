@@ -20,7 +20,7 @@ export default function App() {
 
   useEffect(() => {
     window
-      .fetch("http://kusanagi-api.herokuapp.com/api/books?from=0&limit=5", {
+      .fetch("https://kusanagi-api.herokuapp.com/api/books?from=0&limit=5", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -36,7 +36,7 @@ export default function App() {
   useEffect(() => {
     window
       .fetch(
-        "http://kusanagi-api.herokuapp.com/api/videogames?from=0&limit=5",
+        "https://kusanagi-api.herokuapp.com/api/videogames?from=0&limit=5",
         {
           method: "GET",
           headers: {
